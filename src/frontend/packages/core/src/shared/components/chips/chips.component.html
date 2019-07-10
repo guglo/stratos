@@ -12,10 +12,4 @@
     <span *ngIf="atLowerLimit">+{{ chips.length - limit }}</span>
     <span *ngIf="!atLowerLimit">Show less</span>
   </button>
-  <mat-chip *ngIf="allowAdd" color="primary"  (click)="add('labels')" appClickStopPropagation>
-    <span>+Add Label</span>
-  </mat-chip>
-  <!-- <mat-card-actions *ngIf="allowAdd">
-    <button  mat-raised-button (click)="add('labels')" color="primary">Add</button>
-  </mat-card-actions> -->
 </mat-chip-list>

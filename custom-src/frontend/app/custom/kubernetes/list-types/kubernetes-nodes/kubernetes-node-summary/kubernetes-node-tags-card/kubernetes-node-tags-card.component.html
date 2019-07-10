@@ -5,8 +5,11 @@
     </mat-card-header>
     <mat-card-content>
       <div class="kubernetes-node-tags-card__content">
-       <app-chips (onAdd)="addDialog($event)" [service]="kubeNodeService" [allowAdd]="allowAdd" [chips]="(chipTags$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
+        <app-chips [chips]="(chipTags$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
       </div>
     </mat-card-content>
+    <mat-card-actions class="kubernetes-node-tags-card__add" *ngIf="mode==='labels'"> 
+      <button  mat-raised-button (click)="addDialog()" color="primary">+Add</button>
+    </mat-card-actions>
   </mat-card>
 </div>

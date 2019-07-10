@@ -21,9 +21,6 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
   @Input()
   title: string;
 
-  @Input()
-  allowAdd: boolean;
-
   chipTags$: Observable<AppChip[]>;
 
   constructor(
@@ -37,7 +34,7 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
     );
   }
 
-  public addDialog(type: string):void {
+  public addDialog():void {
     const dialogRef = this.dialog.open(KubernetesNodeAddLabelComponent, {
       height: '400px',
       width: '600px',

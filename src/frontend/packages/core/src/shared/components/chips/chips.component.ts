@@ -48,19 +48,11 @@ export class AppChipsComponent implements OnInit {
   @Input()
   displayProperty = 'value';
 
-  @Input()
-  public allowAdd = false;
-
-  @Input()
-  public service;
-
   public limit;
 
   ngOnInit() {
     this.limit = this.lowerLimit;
   }
-
-  @Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
 
   public toggleLimit() {
     if (this.limit === this.lowerLimit) {
@@ -69,14 +61,6 @@ export class AppChipsComponent implements OnInit {
     } else {
       this.limit = this.lowerLimit;
       this.atLowerLimit = true;
-    }
-  }
-
-
-  public add(type: string) {
-    if (this.service) {
-      this.onAdd.emit(type);
-      //this.service.add(type);
     }
   }
 }
