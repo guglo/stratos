@@ -1,0 +1,23 @@
+
+<div>
+    <h1 mat-dialog-title> Add Label</h1>
+    <mat-dialog-content>
+      <mat-card-content>
+        <div>
+          <app-chips [chips]="(data.labels$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
+        </div>
+      </mat-card-content>
+      <form>
+        <mat-form-field>
+          <input  matInput  placeholder="key" [(ngModel)]="data.key" name="key"  required>
+        </mat-form-field>
+        <mat-form-field>
+          <input  matInput  placeholder="value" [(ngModel)]="data.value" name="value"  required>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button  mat-button (click)="add()"  color="primary">Add</button>
+      <button  mat-button (click)="close()">Close</button>
+    </mat-dialog-actions>
+</div>

@@ -17,6 +17,7 @@ import { FetchKubernetesMetricsAction, GetKubernetesNode } from '../store/kubern
 import { KubernetesEndpointService } from './kubernetes-endpoint.service';
 import { MetricQueryType } from '../../../shared/services/metrics-range-selector.types';
 import { kubernetesNodesSchemaKey } from '../store/kubernetes.entities';
+import {stringifyElement} from '@angular/platform-browser/testing/src/browser_util';
 
 
 export enum KubeNodeMetric {
@@ -62,6 +63,11 @@ export class KubernetesNodeService {
   }
 
 
+  public add(type: string) {
+    if (type === 'labels') {
+      console.log('service add test');
+    }
+  }
 
   public setupMetricObservable(metric: KubeNodeMetric, metricStatistic: MetricStatistic) {
 

@@ -78,6 +78,10 @@ import {
 import {
   KubernetesNodeTagsCardComponent,
 } from './list-types/kubernetes-nodes/kubernetes-node-summary/kubernetes-node-tags-card/kubernetes-node-tags-card.component';
+import {
+  KubernetesNodeAddLabelComponent,
+} from './list-types/kubernetes-nodes/kubernetes-node-summary/kubernetes-node-tags-card/kubernetes-node-add-label/kubernetes-node-add-label.component';
+
 import { NodePodCountComponent } from './list-types/kubernetes-nodes/node-pod-count/node-pod-count.component';
 import { KubernetesPodTagsComponent } from './list-types/kubernetes-pods/kubernetes-pod-tags/kubernetes-pod-tags.component';
 import { PodNameLinkComponent } from './list-types/kubernetes-pods/pod-name-link/pod-name-link.component';
@@ -123,6 +127,7 @@ import { KubernetesSummaryTabComponent } from './tabs/kubernetes-summary-tab/kub
     KubernetesNodeLinkComponent,
     KubernetesNodeComponent,
     KubernetesNodeSummaryComponent,
+    KubernetesNodeAddLabelComponent,
     KubernetesNodePodsComponent,
     KubernetesNodeSummaryCardComponent,
     KubernetesNodeConditionCardComponent,
@@ -170,7 +175,8 @@ import { KubernetesSummaryTabComponent } from './tabs/kubernetes-summary-tab/kub
     KubeNamespacePodCountComponent,
     PodNameLinkComponent,
     NodePodCountComponent,
-    KubernetesServicePortsComponent
+    KubernetesServicePortsComponent,
+    KubernetesNodeAddLabelComponent
   ]
 })
 export class KubernetesModule { }

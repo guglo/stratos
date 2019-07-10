@@ -5,9 +5,8 @@
     </mat-card-header>
     <mat-card-content>
       <div class="kubernetes-node-tags-card__content">
-        <app-chips [chips]="(chipTags$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
-        </div>
-      </mat-card-content>
+       <app-chips (onAdd)="addDialog($event)" [service]="kubeNodeService" [allowAdd]="allowAdd" [chips]="(chipTags$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
+      </div>
+    </mat-card-content>
   </mat-card>
-
 </div>
