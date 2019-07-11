@@ -26,6 +26,8 @@ import { KubernetesNamespacesTabComponent } from './tabs/kubernetes-namespaces-t
 import { KubernetesNodesTabComponent } from './tabs/kubernetes-nodes-tab/kubernetes-nodes-tab.component';
 import { KubernetesPodsTabComponent } from './tabs/kubernetes-pods-tab/kubernetes-pods-tab.component';
 import { KubernetesSummaryTabComponent } from './tabs/kubernetes-summary-tab/kubernetes-summary.component';
+import { KubernetesNodeAddLabelComponent 
+} from './list-types/kubernetes-nodes/kubernetes-node-summary/kubernetes-node-tags-card/kubernetes-node-add-label/kubernetes-node-add-label.component';
 
 const kubernetes: Routes = [{
   path: '',
@@ -155,6 +157,10 @@ const kubernetes: Routes = [{
       }
     }
   ]
+},
+{
+  path: ':endpointId/nodes/:nodeName/summary/newlabels',
+  component: KubernetesNodeAddLabelComponent,
 }
 ];
 

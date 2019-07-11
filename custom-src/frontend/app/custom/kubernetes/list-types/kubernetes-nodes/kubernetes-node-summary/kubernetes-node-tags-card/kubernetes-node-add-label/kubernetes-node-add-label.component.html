@@ -1,23 +1,11 @@
+<div class="kubernetes-node-add-label">
+  <app-page-header>
+    <h1>Add Labels</h1>
+  </app-page-header>
 
-<div>
-    <h1 mat-dialog-title> Add Label</h1>
-    <mat-dialog-content>
-      <mat-card-content>
-        <div>
-          <app-chips [chips]="(data.labels$ | async)" [stacked]="true" [orientation]="'rtl'"></app-chips>
-        </div>
-      </mat-card-content>
-      <form>
-        <mat-form-field>
-          <input  matInput  placeholder="key" [(ngModel)]="data.key" name="key"  required>
-        </mat-form-field>
-        <mat-form-field>
-          <input  matInput  placeholder="value" [(ngModel)]="data.value" name="value"  required>
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button  mat-button (click)="add()"  color="primary">Add</button>
-      <button  mat-button (click)="close()">Close</button>
-    </mat-dialog-actions>
+  <app-steppers [cancel]="summaryUrl">
+    <app-step title="'Add Labels'" [valid]="step1.validate" [onNext]="step1.submit" cancelButtonText="Cancel" finishButtonText="Add">
+      <kubernetes-node-add-label-step #step1></kubernetes-node-add-label-step>
+    </app-step>
+  </app-steppers>
 </div>
