@@ -1,0 +1,8 @@
+.kubernetes-node-add-label-step {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    &__radio-button {
+        margin: 5px;
+    }
+}

@@ -62,7 +62,7 @@ export class KubernetesNodeService {
     );
   }
 
-
+  // gloria
   public add(type: string) {
     if (type === 'labels') {
       console.log('service add test');

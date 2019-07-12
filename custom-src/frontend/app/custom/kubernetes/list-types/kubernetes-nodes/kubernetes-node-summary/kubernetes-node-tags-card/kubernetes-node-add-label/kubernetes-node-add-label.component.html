@@ -1,10 +1,10 @@
 <div class="kubernetes-node-add-label">
   <app-page-header>
-    <h1>Add Labels</h1>
+    <h1>Add Labels to Node : {{nodeName}} </h1>
   </app-page-header>
-
   <app-steppers [cancel]="summaryUrl">
-    <app-step title="'Add Labels'" [valid]="step1.validate" [onNext]="step1.submit" cancelButtonText="Cancel" finishButtonText="Add">
+    <!-- <app-step title="'Add Labels'" [valid]="step1.validate" [onNext]="step1.submit" cancelButtonText="Cancel" finishButtonText="Add"> -->
+    <app-step title="'Add Labels'" hideNextButton="true" cancelButtonText="Close">
       <kubernetes-node-add-label-step #step1></kubernetes-node-add-label-step>
     </app-step>
   </app-steppers>

@@ -6,10 +6,14 @@ import { StepOnNextFunction } from '../../../../../../../../shared/components/st
     styleUrls: ['./kubernetes-node-add-label-step.component.scss']
   })
   export class KubernetesNodeAddLabelStepComponent implements OnInit, OnDestroy {
-    ngOnInit() {}
+    
+    addLabelMode: string; //selected either exsitingLabels or newLabels
+    ngOnInit() {
+      this.addLabelMode = "exsitingLabels";
+    }
     ngOnDestroy() {}
     validate = () => { return true }
-    submit: StepOnNextFunction = () => {
+    submit = () => {
         console.log('add....')
     }
   }

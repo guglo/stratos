@@ -1,5 +1,7 @@
 //import { Component, Input, OnInit, Inject } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+//import { map } from 'rxjs/operators';
 //import { MAT_DIALOG_DATA, MatDialogRef } from  '@angular/material/dialog';
 //import { Observable } from 'rxjs';
 //import { AppChip } from '../../../../../../../shared/components/chips/chips.component';
@@ -43,13 +45,23 @@ import { KubernetesNodeService } from '../../../../../services/kubernetes-node.s
 // }
 
 //routing page to have steps
-export class KubernetesNodeAddLabelComponent {
+export class KubernetesNodeAddLabelComponent implements OnInit{
   summaryUrl: string;
-  constructor(public kubeNodeService: KubernetesNodeService) {
-    const kGuid = this.kubeNodeService.kubeGuid;
-    const nodeName = this.kubeNodeService.nodeName;
-    console.log("guid =" + kGuid)
-    console.log("node =" + nodeName)
-    this.summaryUrl =`/kubernetes/${kGuid}/nodes/${nodeName}/summary`;
+  constructor(
+    public kubeNodeService: KubernetesNodeService, 
+    private activatedRoute: ActivatedRoute,) {}
+
+  ngOnInit() {
+    this.getSummaryUrl();
+  }
+
+  nodeName: string;
+
+  getSummaryUrl = () => {
+    const kGuid = this.activatedRoute.snapshot.params.endpointId;
+    //this.kubeNodeService.kubeGuid;
+    this.nodeName = this.activatedRoute.snapshot.params.nodeName; 
+    //this.kubeNodeService.nodeName;
+    this.summaryUrl =`/kubernetes/${kGuid}/nodes/${this.nodeName}/summary`;
   }
 }

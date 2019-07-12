@@ -7,7 +7,6 @@ import { AppChip } from '../../../../../../shared/components/chips/chips.compone
 import { AppState } from '../../../../../../../../store/src/app-state';
 import { RouterNav } from '../../../../../../../../store/src/actions/router.actions';
 import { KubernetesNodeService } from '../../../../services/kubernetes-node.service';
-import { KubernetesEndpointService } from '../../../../services/kubernetes-endpoint.service';
 import { map } from 'rxjs/operators';
 //import { MatDialog } from '@angular/material';
 //import { KubernetesNodeAddLabelComponent } from './kubernetes-node-add-label/kubernetes-node-add-label.component';
@@ -31,8 +30,7 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
 
   constructor(
     public store: Store<AppState>,
-    public kubeNodeService: KubernetesNodeService,
-    public kubeEndpointServeice: KubernetesEndpointService, 
+    public kubeNodeService: KubernetesNodeService 
     // private  dialog:  MatDialog
   ) { }
 

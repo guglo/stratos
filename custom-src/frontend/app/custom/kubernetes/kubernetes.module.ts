@@ -180,8 +180,8 @@ import { KubernetesSummaryTabComponent } from './tabs/kubernetes-summary-tab/kub
     PodNameLinkComponent,
     NodePodCountComponent,
     KubernetesServicePortsComponent,
-    KubernetesNodeAddLabelComponent, //gloria
-    KubernetesNodeAddLabelStepComponent //gloria
+    //KubernetesNodeAddLabelComponent, //gloria
+    //KubernetesNodeAddLabelStepComponent //gloria
   ]
 })
 export class KubernetesModule { }
