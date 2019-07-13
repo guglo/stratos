@@ -1,20 +1,25 @@
-<div>
-  <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+<div class="kubernetes-node-add-label-step">
+  <mat-tab-group 
+    (selectedIndexChange)="onTabChange($event)">
     <mat-tab label="Select Existing Label">
-      <ng-template matTabContent>
-          <mat-selection-list #labels 
-            [(ngModel)]="selectedLabels"
-            (selectionChange)="onLabelSelectionChange($event)">
-            <mat-list-option
-              checkboxPosition="before"
-              *ngFor="let label of existingLabels" [value]="label">
-              {{label}}
-            </mat-list-option>
-          </mat-selection-list>
-      </ng-template>
+      <div class="kubernetes-node-add-label-step__tabcontent">
+        <ng-template matTabContent>
+            <span *ngIf="!existingLabels || !existingLabels.length">None</span>
+            <mat-selection-list #labels 
+              [(ngModel)]="selectedLabels"
+              (selectionChange)="onLabelSelectionChange($event)">
+              <mat-list-option
+                checkboxPosition="before"
+                *ngFor="let label of existingLabels" [value]="label">
+                {{label}}
+              </mat-list-option>
+            </mat-selection-list>
+        </ng-template>
+      </div>
     </mat-tab>
     <mat-tab label="Create New Label">
-      <ng-template matTabContent>
+      <div class="kubernetes-node-add-label-step__tabcontent">
+        <ng-template matTabContent>
           <form #form="ngForm" class="stepper-form">
               <mat-form-field>
                 <input  matInput  [formControl]="labelKeyControl" [errorStateMatcher]="matcher"
@@ -37,9 +42,10 @@
                 </mat-error>  
               </mat-form-field>
           </form>
-      </ng-template>
+        </ng-template>
+      </div>
     </mat-tab>
   </mat-tab-group>
-  <button  mat-raised-button [disabled]="disableAddButton"
+  <button  class="kubernetes-node-add-label-step__button" mat-raised-button [disabled]="disableAddButton"
     (click)="addLabel()"  color="primary">Add</button>
 </div>

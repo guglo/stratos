@@ -50,11 +50,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
     disableAdd = () => {
       if(this.addLabelMode === this.EXISTING_LABEL_TAB) {
-        return !this.selectedLabels || this.selectedLabels.length < 1;
+        return !this.selectedLabels || this.selectedLabels.length < 1
       }
       else {
-        return (!this.labelKey || this.labelKey.length < 1) && 
-          (!this.labelValue || this.labelKey.length <1);
+        return this.labelValueControl.hasError('required') ||
+          this.labelKeyControl.hasError('required');
       }
     }
 
