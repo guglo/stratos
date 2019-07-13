@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 //import { MatSelectionListChange } from  '@angular/material/list';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 //import { StepOnNextFunction } from '../../../../../../../../shared/components/stepper/step/step.component';
+import { MatDialog } from '@angular/material';
+import { DialogConfirmComponent } from '../../../../../../../../shared/components/dialog-confirm/dialog-confirm.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -20,6 +22,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     EXISTING_LABEL_TAB = 0;
     NEW_LABEL_TAB = 1;
 
+    @Input()
+    nodeName: string;
+
     addLabelMode = this.EXISTING_LABEL_TAB; //selected either EXISTING_LABEL or NEW_LABEL
     labelKey: string;
     labelValue: string;
@@ -27,6 +32,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     selectedLabels: string[];
     disableAddButton = true;
 
+    constructor(private  confirmDialog:  MatDialog) {
+
+    }
     ngOnInit() {}
     ngOnDestroy() {}
 
@@ -58,14 +66,38 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
       }
     }
 
-    addLabel = () => {
+    addLabelAction = () => {
       if(this.addLabelMode === this.EXISTING_LABEL_TAB) {
+        console.log('confirm yes')
         console.log(JSON.stringify(this.selectedLabels))
       }
       else {
         console.log(this.labelKey)
         console.log(this.labelValue)
       }
+    }
+
+    addConfirmDialog():void {
+      let lbls = "";
+      if(this.addLabelMode === this.EXISTING_LABEL_TAB) {
+        lbls = this.selectedLabels.join(',');
+      }
+      else {
+        lbls = this.labelKey + ":" + this.labelValue;
+      }
+      let msgs = 
+        `Are you sure to add labels "${lbls}" to node "${this.nodeName}"? \n\n click Yes to continue...\n\n`
+      const dialogRef = this.confirmDialog.open(DialogConfirmComponent, {
+        height: '300px',
+        width: '600px',
+        data: {
+          title: "Add Label Confirm", message: msgs, 
+          confirmLabel: "Yes", action: this.addLabelAction}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The confirm was closed ');
+      });
     }
 
     labelKeyControl = new FormControl('', [

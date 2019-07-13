@@ -9,7 +9,8 @@
       </div>
     </mat-card-content>
     <mat-card-actions class="kubernetes-node-tags-card__add" *ngIf="mode==='labels'"> 
-      <button  mat-raised-button (click)="addLabelPage()" color="primary">Add</button>
+      <button  mat-raised-button (click)="addLabelPage()" color="primary">
+        <mat-icon>add</mat-icon>Add Labels</button>
     </mat-card-actions>
   </mat-card>
 </div>

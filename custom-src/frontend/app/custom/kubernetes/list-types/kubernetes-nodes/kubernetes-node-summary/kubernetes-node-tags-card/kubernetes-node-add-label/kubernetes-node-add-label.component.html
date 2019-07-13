@@ -5,7 +5,7 @@
   <app-steppers [cancel]="summaryUrl">
     <!-- <app-step title="'Add Labels'" [valid]="step1.validate" [onNext]="step1.submit" cancelButtonText="Cancel" finishButtonText="Add"> -->
     <app-step title="'Add Labels'" hideNextButton="true" cancelButtonText="Close">
-      <kubernetes-node-add-label-step #step1></kubernetes-node-add-label-step>
+      <kubernetes-node-add-label-step [nodeName]="nodeName" #step1></kubernetes-node-add-label-step>
     </app-step>
   </app-steppers>
 </div>

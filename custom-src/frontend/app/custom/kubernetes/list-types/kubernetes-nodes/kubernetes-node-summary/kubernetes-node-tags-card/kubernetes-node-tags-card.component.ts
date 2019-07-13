@@ -8,8 +8,6 @@ import { AppState } from '../../../../../../../../store/src/app-state';
 import { RouterNav } from '../../../../../../../../store/src/actions/router.actions';
 import { KubernetesNodeService } from '../../../../services/kubernetes-node.service';
 import { map } from 'rxjs/operators';
-//import { MatDialog } from '@angular/material';
-//import { KubernetesNodeAddLabelComponent } from './kubernetes-node-add-label/kubernetes-node-add-label.component';
 
 @Component({
   selector: 'app-kubernetes-node-tags-card',
@@ -31,7 +29,6 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
   constructor(
     public store: Store<AppState>,
     public kubeNodeService: KubernetesNodeService 
-    // private  dialog:  MatDialog
   ) { }
 
   ngOnInit() {
@@ -39,21 +36,6 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
       map(node => this.getTags(node.metadata[this.mode])),
     );
   }
-
-  // public addDialog():void {
-  //   const dialogRef = this.dialog.open(KubernetesNodeAddLabelComponent, {
-  //     height: '400px',
-  //     width: '600px',
-  //     data: {labels$ : this.kubeNodeService.nodeEntity$.pipe(
-  //       map(node => this.getTags(node.metadata[this.mode])),
-  //     ), key: 'test', value: 'test'}
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed ' + result);
-  //   });
-  // }
-
   public addLabelPage() : void {
     // Add label page path will be like 
     // kubernetes/gUvUTVOTxhd1mYGtl1L8UDOe7TE/nodes/minikube/summary/addlabels
