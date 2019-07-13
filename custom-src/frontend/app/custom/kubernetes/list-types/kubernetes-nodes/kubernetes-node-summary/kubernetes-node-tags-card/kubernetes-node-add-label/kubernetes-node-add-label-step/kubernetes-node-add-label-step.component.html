@@ -1,24 +1,45 @@
 <div>
-  <mat-radio-group
-    class="kubernetes-node-add-label-step"
-    [(ngModel)]="addLabelMode">
-    <mat-radio-button 
-    class="kubernetes-node-add-label-step__radio-button" [value]="'exsitingLabel'">
-      Select Existing Label
-    </mat-radio-button>
-    <mat-radio-button 
-    class="kubernetes-node-add-label-step__radio-button" [value]="'newLabel'">
-      Create New Label
-    </mat-radio-button>
-  </mat-radio-group>
-  <div *ngIf="addLabelMode==='exsitingLabel'">Test</div>
-  <form #form="ngForm" class="stepper-form" *ngIf="addLabelMode==='newLabel'">
-      <mat-form-field>
-        <input  matInput  placeholder="key" [(ngModel)]="labelkey" name="key"  required>
-      </mat-form-field>
-      <mat-form-field>
-        <input  matInput  placeholder="value" [(ngModel)]="labelValue" name="value"  required>
-      </mat-form-field>
-  </form>
-  <button  mat-raised-button (click)="addLabel()"  color="primary">Add</button>
+  <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+    <mat-tab label="Select Existing Label">
+      <ng-template matTabContent>
+          <mat-selection-list #labels 
+            [(ngModel)]="selectedLabels"
+            (selectionChange)="onLabelSelectionChange($event)">
+            <mat-list-option
+              checkboxPosition="before"
+              *ngFor="let label of existingLabels" [value]="label">
+              {{label}}
+            </mat-list-option>
+          </mat-selection-list>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Create New Label">
+      <ng-template matTabContent>
+          <form #form="ngForm" class="stepper-form">
+              <mat-form-field>
+                <input  matInput  [formControl]="labelKeyControl" [errorStateMatcher]="matcher"
+                  placeholder="key"  (ngModelChange)="onLabelKeyChange()" [(ngModel)]="labelKey" name="labelKey" required>
+                <mat-error *ngIf="labelKeyControl.hasError('email') && !labelKeyControl.hasError('required')">
+                  Please enter a valid label key
+                </mat-error>
+                <mat-error *ngIf="labelKeyControl.hasError('required')">
+                  Key is <strong>required</strong>
+                </mat-error>  
+              </mat-form-field>
+              <mat-form-field>
+                <input  matInput  [formControl]="labelValueControl" [errorStateMatcher]="matcher"
+                  placeholder="value" (ngModelChange)="onLabelValueChange()"  [(ngModel)]="labelValue" name="labelValue" required>
+                <mat-error *ngIf="labelValueControl.hasError('email') && !labelValueControl.hasError('required')">
+                  Please enter a valid label value
+                </mat-error>
+                <mat-error *ngIf="labelValueControl.hasError('required')">
+                  Value is <strong>required</strong>
+                </mat-error>  
+              </mat-form-field>
+          </form>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <button  mat-raised-button [disabled]="disableAddButton"
+    (click)="addLabel()"  color="primary">Add</button>
 </div>
