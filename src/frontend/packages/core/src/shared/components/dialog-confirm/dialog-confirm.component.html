@@ -13,4 +13,6 @@
   <button color="primary" mat-button (click)="onNoClick()" cdkFocusInitial>Cancel</button>
   <button *ngIf="data.confirm" [color]="data.critical ? 'warn' : 'primary'" mat-button [mat-dialog-close]="true" [innerHtml]="" [disabled]="textToMatch && textToMatch !== matchValue">{{
     data.confirm }}</button>
+  <button *ngIf="data.action" (click)="data.action()" mat-button [color]="primary" mat-button [mat-dialog-close]="true">{{
+        data.confirmLabel }}</button>  
 </div>

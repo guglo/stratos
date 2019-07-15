@@ -55,7 +55,7 @@ export class KubernetesNodeAddLabelComponent implements OnInit{
     this.getSummaryUrl();
   }
 
-  nodeName: string;
+  public nodeName: string;
 
   getSummaryUrl = () => {
     const kGuid = this.activatedRoute.snapshot.params.endpointId;
