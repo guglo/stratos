@@ -33,6 +33,7 @@ import {
   GET_NAMESPACE_INFO,
   GET_NAMESPACES_INFO,
   GET_NODE_INFO,
+  SET_NODE_LABEL,
   GET_NODES_INFO,
   GET_POD_INFO,
   GET_PODS_IN_NAMESPACE_INFO,
@@ -56,6 +57,7 @@ import {
   GetKubernetesStatefulSets,
   KubeAction,
   KubePaginationAction,
+  SetKubernetesNodeLabel
 } from './kubernetes.actions';
 import {
   kubernetesAppsSchemaKey,
@@ -67,6 +69,7 @@ import {
   kubernetesServicesSchemaKey,
   kubernetesStatefulSetsSchemaKey,
 } from './kubernetes.entities';
+import { of } from 'rxjs';
 
 export interface KubeDashboardStatus {
   guid: string;
@@ -146,6 +149,19 @@ export class KubernetesEffects {
     flatMap(action => {
       return this.processSingleItemAction<KubernetesNode>(action,
         `/pp/${this.proxyAPIVersion}/proxy/api/v1/nodes/${action.nodeName}`,
+        kubernetesNodesSchemaKey,
+        (node) => node.metadata.name);
+    })
+  );
+
+  @Effect()
+  setNodeLabel$ = this.actions$.pipe(
+    ofType<SetKubernetesNodeLabel>(SET_NODE_LABEL),
+    flatMap(action => {
+      const patchJson = {'metadata': {'labels': action.label}};
+      return this.patchSingleItemAction<KubernetesNode>(action,
+        `/pp/${this.proxyAPIVersion}/proxy/api/v1/nodes/minikube`,
+        patchJson,
         kubernetesNodesSchemaKey,
         (node) => node.metadata.name);
     })
@@ -402,6 +418,42 @@ export class KubernetesEffects {
     };
     return this.http
       .get(url, requestArgs)
+      .pipe(mergeMap(response => {
+        const base = {
+          entities: { [schemaKey]: {} },
+          result: []
+        } as NormalizedResponse;
+        const items = [response[action.kubeGuid]];
+        const processesData = items.reduce((res, data) => {
+          const id = getId(data);
+          res.entities[schemaKey][id] = data;
+          res.result.push(id);
+          return res;
+        }, base);
+        return [
+          new WrapperRequestActionSuccess(processesData, action)
+        ];
+      }), catchError(error => [
+        new WrapperRequestActionFailed(error.message, action, 'fetch', {
+          endpointIds: [action.kubeGuid],
+          url: error.url || url,
+          eventCode: error.status ? error.status + '' : '500',
+          message: 'Kubernetes API request error',
+          error
+        })
+      ]));
+  }
+
+  private patchSingleItemAction<T>(
+    action: KubeAction, url: string, patchJson: Object, schemaKey: string, getId: GetID<T>) {
+    this.store.dispatch(new StartRequestAction(action));
+    const headers = new HttpHeaders({ 'Content-Type': "application/merge-patch+json"});
+    const requestArgs = {
+      patchJson,
+      headers,
+    };
+    return this.http
+      .patch(url, requestArgs)
       .pipe(mergeMap(response => {
         const base = {
           entities: { [schemaKey]: {} },

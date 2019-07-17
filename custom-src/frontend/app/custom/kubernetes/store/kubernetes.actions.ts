@@ -28,6 +28,10 @@ export const GET_NODE_INFO = '[KUBERNETES Endpoint] Get Node Info';
 export const GET_NODE_INFO_SUCCESS = '[KUBERNETES Endpoint] Get Node Info Success';
 export const GET_NODE_INFO_FAILURE = '[KUBERNETES Endpoint] Get Node Info Failure';
 
+export const SET_NODE_LABEL = '[KUBERNETES Endpoint] Set Node Label';
+export const SET_NODE_LABEL_SUCCESS = '[KUBERNETES Endpoint] Set Node Label Success';
+export const SET_NODE_LABEL_FAILURE = '[KUBERNETES Endpoint] Set Node Label Failure';
+
 export const GET_POD_INFO = '[KUBERNETES Endpoint] Get Pod Info';
 export const GET_POD_INFO_SUCCESS = '[KUBERNETES Endpoint] Get Pod Info Success';
 export const GET_POD_INFO_FAILURE = '[KUBERNETES Endpoint] Get Pod Info Failure';
@@ -157,6 +161,20 @@ export class GetKubernetesNode implements KubeAction {
     GET_NODE_INFO,
     GET_NODE_INFO_SUCCESS,
     GET_NODE_INFO_FAILURE
+  ];
+}
+
+export class SetKubernetesNodeLabel implements KubeAction {
+  constructor(public nodeName: string, public kubeGuid: string, public label: Object) {
+  }
+  type = SET_NODE_LABEL;
+  entityKey = kubernetesNodesSchemaKey;
+  entity = [entityFactory(kubernetesNodesSchemaKey)];
+
+  actions = [
+    SET_NODE_LABEL,
+    SET_NODE_LABEL_SUCCESS,
+    SET_NODE_LABEL_FAILURE
   ];
 }
 

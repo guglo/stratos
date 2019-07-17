@@ -13,7 +13,7 @@ import { AppState } from '../../../../../store/src/app-state';
 import { entityFactory, metricSchemaKey } from '../../../../../store/src/helpers/entity-factory';
 import { EntityInfo } from '../../../../../store/src/types/api.types';
 import { KubernetesNode, MetricStatistic } from '../store/kube.types';
-import { FetchKubernetesMetricsAction, GetKubernetesNode } from '../store/kubernetes.actions';
+import { FetchKubernetesMetricsAction, GetKubernetesNode, SetKubernetesNodeLabel } from '../store/kubernetes.actions';
 import { KubernetesEndpointService } from './kubernetes-endpoint.service';
 import { MetricQueryType } from '../../../shared/services/metrics-range-selector.types';
 import { kubernetesNodesSchemaKey } from '../store/kubernetes.entities';
@@ -41,6 +41,7 @@ export class KubernetesNodeService {
     public entityMonitorFactory: EntityMonitorFactory
   ) {
     this.nodeName = getIdFromRoute(activatedRoute, 'nodeName');
+    console.log('nodeName ' + this.nodeName);
     this.kubeGuid = kubeEndpointService.kubeGuid;
 
     const nodeEntityService = this.entityServiceFactory.create<KubernetesNode>(
@@ -62,11 +63,12 @@ export class KubernetesNodeService {
     );
   }
 
-  // gloria
-  public add(type: string) {
-    if (type === 'labels') {
-      console.log('service add test');
-    }
+  public addLabel (label: Object) {
+    console.log('service add label ' + JSON.stringify(label));
+    console.log(' add label node name = ' + this.nodeName)
+    const setKubernetesNodeLabelAction = 
+      new SetKubernetesNodeLabel(this.nodeName, this.kubeGuid, label);
+    this.store.dispatch(setKubernetesNodeLabelAction);
   }
 
   public setupMetricObservable(metric: KubeNodeMetric, metricStatistic: MetricStatistic) {

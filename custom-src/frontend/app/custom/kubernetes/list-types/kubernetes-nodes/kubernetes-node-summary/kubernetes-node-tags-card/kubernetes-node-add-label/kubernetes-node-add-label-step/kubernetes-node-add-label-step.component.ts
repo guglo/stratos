@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 //import { MatSelectionListChange } from  '@angular/material/list';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-//import { StepOnNextFunction } from '../../../../../../../../shared/components/stepper/step/step.component';
 import { MatDialog } from '@angular/material';
 import { DialogConfirmComponent } from '../../../../../../../../shared/components/dialog-confirm/dialog-confirm.component';
+import { KubernetesNodeService } from '../../../../../../services/kubernetes-node.service';
+
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -32,27 +33,32 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     selectedLabels: string[];
     disableAddButton = true;
 
-    constructor(private  confirmDialog:  MatDialog) {
-
+    constructor(
+      public kubeNodeService: KubernetesNodeService,
+      private  confirmDialog:  MatDialog) {
     }
     ngOnInit() {}
     ngOnDestroy() {}
 
     onLabelKeyChange = () => {
+      //Check if need to disable Add button
       this.disableAddButton = this.disableAdd();
     }
 
     onLabelValueChange = () => {
+      //Check if need to disable Add button
       this.disableAddButton = this.disableAdd();
     }
 
     onTabChange = (event) => {
       this.addLabelMode = event;
+      //Check if need to disable Add button
       this.disableAddButton = this.disableAdd();
     }
 
     onLabelSelectionChange = (event) => {
       console.log(JSON.stringify(this.selectedLabels))
+      //Check if need to disable Add button
       this.disableAddButton = this.disableAdd();
     }
 
@@ -68,12 +74,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
     addLabelAction = () => {
       if(this.addLabelMode === this.EXISTING_LABEL_TAB) {
-        console.log('confirm yes')
         console.log(JSON.stringify(this.selectedLabels))
       }
       else {
-        console.log(this.labelKey)
-        console.log(this.labelValue)
+        let labelToAdd = {};
+        labelToAdd[this.labelKey] = this.labelValue;
+        this.kubeNodeService.addLabel(labelToAdd);
       }
     }
 
@@ -96,7 +102,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The confirm was closed ');
+        //console.log('The confirm was closed ');
       });
     }
 

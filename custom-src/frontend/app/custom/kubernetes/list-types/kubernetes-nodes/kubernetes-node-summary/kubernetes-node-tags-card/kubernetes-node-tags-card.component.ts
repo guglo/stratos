@@ -1,13 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AppChip } from '../../../../../../shared/components/chips/chips.component';
 import { AppState } from '../../../../../../../../store/src/app-state';
 import { RouterNav } from '../../../../../../../../store/src/actions/router.actions';
 import { KubernetesNodeService } from '../../../../services/kubernetes-node.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-kubernetes-node-tags-card',
@@ -33,7 +31,9 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
 
   ngOnInit() {
     this.chipTags$ = this.kubeNodeService.nodeEntity$.pipe(
-      map(node => this.getTags(node.metadata[this.mode])),
+      map(node => {
+        //console.log(JSON.stringify(node))
+        return this.getTags(node.metadata[this.mode])}),
     );
   }
   public addLabelPage() : void {
@@ -48,6 +48,7 @@ export class KubernetesNodeTagsCardComponent implements OnInit {
   }
 
   private getTags(tags: {}) {
+    //console.log(JSON.stringify(tags))
     const labelEntries = Object.entries(tags);
     return labelEntries.map(t => ({
       value: `${t[0]}:${t[1]}`
